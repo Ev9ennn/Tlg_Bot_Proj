@@ -1,0 +1,1431 @@
+import telebot
+from telebot import types
+import random
+
+token = telebot.TeleBot('6037890641:AAED7bAqg-0_AIo92c50bWrsF3QjAA6fk7k')
+
+fact_sp_ru = ['Солнце в 300 000 раз больше, чем наша планета Земля', 'Солнце полностью проворачивается вокруг своей оси за 25-35 дней',
+              'Солнце теряет до 1 000 000 тонн своей массы каждую секунду из-за солнечного ветра', 'У меркурия и Венеры отсутствуют какие-либо спутники',
+              'Вeнeрa являeтся eдинствeннoй плaнeтoй, кoтoрaя врaщaeтся в прoтивoпoлoжнyю стoрoнy oтнoситeльнo дрyгих плaнeт Сoлнeчнoй систeмы',
+              'Ио, спутник Юпитера - самое вулканическое место в солнечной системе', 'У Юпитера самое большое количество спутников, у него их 67',
+              'Сатурн обладает низкой плотностью, и если его положить в воду, то он поплывёт', 'Уран имеет уникальный наклон, из-за этого одна ночь на нём длится 21 год',
+              'Сейчас в Солнечной системе насчитывается 5 карликовых планет: Церера, Плутон, Хаумеа, Эрида и Макемаке',
+              'Сoвeтский и рoссийский кoсмoнaвт Сeргeй Кoнстaнтинoвич Крикaлёв являeтся рeкoрдсмeнoм пo врeмeни нaхoждeния в кoсмoсe: 803 дня, 9 чaсов и 39 минyт, это чуть больше 2х лет',
+              'В северной части неба можно увидеть две галактики: галактику Андромеда(М31) и галактику Треугольник(М33)', 'Прямо сейчас к нам приближается галактика Андромеда',
+              'В кoсмoсe нaсчитывaeтся пoрядкa 2^1023 звёзд, этo 200 000 000 000 000 000 000 000 000 000!', 'Один день на Плутоне равен 6 дням и 9 часам на Земле', 'Следы, оставленные на Луне, не исчезнут, пока нет ветра',
+              'Закат на Марсе синего цвета', 'Земля - единственная планета, не названная в честь Бога', 'На Юпитере и Сатурне идет алмазный дождь',
+              'В космосе звезд больше, чем песчинок в мире', 'Только 5% Вселенной видно с Земли', 'В любой момент на Земле происходит не менее 2000 гроз',
+              'Мы знаем больше о Марсе и нашей Луне, чем о океанах', 'Астронавты могут вырасти примерно на 5 см в высоту, находясь в космосе',
+              'Наша Луна удаляется от Земли со скоростью 4 см в год', 'МКС видна более чем 90% населения Земли', 'Юпитер спасает Землю от астероидов, он притягивает своей гравитацией большинство астероидов',
+              'День на Меркурии равен 58 земным дням', 'Шариковые ручки не работают в космосе, поэтому космонавтам выдают карандаши',
+              'Существует планета, полностью состоящая из алмазов', 'Масса Солнца составляет 99.86% от массы всей Солнечной системы, оставшиеся 0.14% приходятся на планеты и астероиды',
+              'Человек сможет выжить в открытом космосе без скафандра в течение 90 секунд, если немедленно выдохнет весь воздух из легких',
+              'Магнитное поле Юпитера настолько мощное, что ежедневно обогащает магнитное поле нашей планеты миллиардами Ватт',
+              'Самый большой астероид в Солнечной системе имеет диаметр 525 километров', 'На Земле деревьев больше, чем звезд в Млечном Пути', 'Следы лунной посадки, вероятно, все еще будут видны через миллионы лет']
+
+fact_sp_en = ['The sun is 300,000 times larger than our planet Earth', 'The sun rotates completely around its axis in 25-35 days',
+              'The sun loses up to 1,000,000 tons of its mass every second due to the solar wind', 'Mercury and Venus lack any satellites',
+              'Venus is the only planet that rotates in the opposite direction relative to other planets in the Solar system',
+              'Io, Jupiters moon is the most volcanic place in the solar system', 'Jupiter has the largest number of satellites, it has 67',
+              'Saturn has a low density, and if you put it in water, it will float', 'Uranus has a unique slope, because of this, one night on it lasts 21 years',
+              'There are currently 5 dwarf planets in the Solar System: Ceres, Pluto, Haumea, Eris and Makemake',
+              'Soviet and Russian cosmonaut Sergei Konstantinovich Krikalev holds the record for the time spent in space: 803 days, 9 hours and 39 minutes, its a little more than 2 years',
+              'Two galaxies can be seen in the northern part of the sky: the Andromeda galaxy (M31) and the Triangle galaxy (M33)', 'The Andromeda galaxy is approaching us right now',
+              'There are about 2^1023 stars in space, this is 200 000 000 000 000 000 000 000 000 000!', 'One day on Pluto is equal to 6 days and 9 hours on Earth', 'Traces left on the Moon will not disappear until there is no wind',
+              'Sunset on Mars is blue', 'Earth is the only planet not named after God', 'There is a diamond rain on Jupiter and Saturn',
+              'There are more stars in space than there are grains of sand in the world', 'Only 5% of the universe is visible from Earth', 'At least 2000 thunderstorms occur on Earth at any moment',
+              'We know more about Mars and our moon than we do about the oceans', 'Astronauts can grow about 5 cm tall while in space',
+              'Our Moon is moving away from Earth at a rate of 4 cm per year', 'The ISS is visible to more than 90% of the Earths population', 'Jupiter saves the Earth from asteroids, it attracts most asteroids with its gravity',
+              'A day on Mercury is equal to 58 Earth days', 'Ballpoint pens dont work in space, so astronauts are given pencils',
+              'There is a planet consisting entirely of diamonds', 'The mass of the Sun is 99.86% of the mass of the entire Solar system, the remaining 0.14% are planets and asteroids',
+              'A person can survive in outer space without a spacesuit for 90 seconds if he immediately exhales all the air from his lungs',
+              'Jupiters magnetic field is so powerful that it enriches our planets magnetic field with billions of watts every day',
+              'The largest asteroid in the Solar System has a diameter of 525 kilometers', 'There are more trees on Earth than stars in the Milky Way', 'Traces of a lunar landing will probably still be visible in millions of years']
+
+
+@token.message_handler(commands=['start'])
+def start(message):
+    markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
+    btn1 = types.KeyboardButton('Русский')
+    btn2 = types.KeyboardButton('English')
+    markup.add(btn1, btn2)
+    token.send_message(message.from_user.id, 'Выберите язык / Select a language', reply_markup=markup)
+
+
+@token.message_handler(content_types=['text'])
+def message_txt(message):
+    if message.text == 'Русский':
+        markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
+        btn1 = types.KeyboardButton('Российский космос')
+        btn2 = types.KeyboardButton('Новости')
+        btn3 = types.KeyboardButton('Проекты и мероприятия')
+        btn4 = types.KeyboardButton('Знания')
+        btn5 = types.KeyboardButton('Навигация профессий')
+        btn6 = types.KeyboardButton('Учителю')
+        btn7 = types.KeyboardButton('Медиа')
+        btn8 = types.KeyboardButton('Поиск')
+        btn9 = types.KeyboardButton('Вы точно этого не знали!')
+        btn10 = types.KeyboardButton('Выброр языка')
+        markup.add(btn1, btn2, btn3, btn4, btn5, btn6, btn7, btn8, btn9, btn10)
+        token.send_message(message.from_user.id, 'Вас приветствует бот для сайта Space4Kids')
+        token.send_message(message.from_user.id, 'Сайт Space4Kids создан для того, чтобы вы смогли получить актуальную информаци и новые знания о космосе')
+        token.send_message(message.from_user.id, 'Бот поможет вам найти то, что вы хотите за считанные секунды')
+        token.send_message(message.from_user.id, 'Выберите интересующий вас раздел', reply_markup=markup)
+
+    elif message.text == 'Вы точно этого не знали!':
+        for i in range(10):
+            token.send_message(message.from_user.id, random.choice(fact_sp_ru))
+
+    elif message.text == 'Российский космос':
+        markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
+        btn1 = types.KeyboardButton('История')
+        btn2 = types.KeyboardButton('Техника')
+        btn3 = types.KeyboardButton('Космодромы')
+        btn4 = types.KeyboardButton('Космонавты')
+        btn5 = types.KeyboardButton('Следуй за космонавтом')
+        btn6 = types.KeyboardButton('Главное меню')
+        markup.add(btn1, btn2, btn3, btn4, btn5, btn6)
+        token.send_message(message.from_user.id, 'Выберите подраздел', reply_markup=markup)
+
+    elif message.text == 'История':
+        markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
+        btn1 = types.KeyboardButton('Главное меню')
+        markup.add(btn1)
+        token.send_message(message.from_user.id, 'Раздел:\nИстория\n\nhttps://space4kids.ru/140', reply_markup=markup, parse_mode='Markdown')
+
+    elif message.text == 'Техника':
+        markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
+        btn1 = types.KeyboardButton('Главное меню')
+        markup.add(btn1)
+        token.send_message(message.from_user.id, 'Раздел:\nТехника\n\nhttps://space4kids.ru/138', reply_markup=markup, parse_mode='Markdown')
+
+    elif message.text == 'Космодромы':
+        markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
+        btn1 = types.KeyboardButton('Главное меню')
+        markup.add(btn1)
+        token.send_message(message.from_user.id, 'Раздел:\nКосмодромы\n\nhttps://space4kids.ru/139', reply_markup=markup, parse_mode='Markdown')
+
+    elif message.text == 'Космонавты':
+        markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
+        btn1 = types.KeyboardButton('Главное меню')
+        markup.add(btn1)
+        token.send_message(message.from_user.id, 'Раздел:\nКосмонавты\n\nhttps://space4kids.ru/40', reply_markup=markup, parse_mode='Markdown')
+
+    elif message.text == 'Следуй за космонавтом':
+        markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
+        btn1 = types.KeyboardButton('Главное меню')
+        markup.add(btn1)
+        token.send_message(message.from_user.id, 'Раздел:\nСледуй за космонавтом\n\nhttps://space4kids.ru/131', reply_markup=markup, parse_mode='Markdown')
+
+    elif message.text == 'Главное меню':
+        markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
+        btn1 = types.KeyboardButton('Российский космос')
+        btn2 = types.KeyboardButton('Новости')
+        btn3 = types.KeyboardButton('Проекты и мероприятия')
+        btn4 = types.KeyboardButton('Знания')
+        btn5 = types.KeyboardButton('Навигация профессий')
+        btn6 = types.KeyboardButton('Учителю')
+        btn7 = types.KeyboardButton('Медиа')
+        btn8 = types.KeyboardButton('Поиск')
+        btn9 = types.KeyboardButton('Вы точно этого не знали!')
+        btn10 = types.KeyboardButton('Выброр языка')
+        markup.add(btn1, btn2, btn3, btn4, btn5, btn6, btn7, btn8, btn9, btn10)
+        token.send_message(message.from_user.id, 'Выберите интересующий вас раздел', reply_markup=markup)
+
+    elif message.text == 'Новости':
+        markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
+        btn1 = types.KeyboardButton('Главное меню')
+        markup.add(btn1)
+        token.send_message(message.from_user.id, 'Раздел:\nНовости\n\nhttps://space4kids.ru/101', reply_markup=markup, parse_mode='Markdown')
+
+    elif message.text == 'Проекты и мероприятия':
+        markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
+        btn01 = types.KeyboardButton('Главное меню')
+        btn1 = types.KeyboardButton('Кванториум')
+        btn2 = types.KeyboardButton('Сириус')
+        btn3 = types.KeyboardButton('Университетская гимназия МГУ')
+        btn4 = types.KeyboardButton('Центр космонавтики и авиации')
+        btn5 = types.KeyboardButton('Космический класс')
+        btn6 = types.KeyboardButton('Космические смены')
+        btn7 = types.KeyboardButton('Программа "Универсат"')
+        btn8 = types.KeyboardButton('Cansat Russia')
+        btn9 = types.KeyboardButton('Проект космический урок')
+        btn10 = types.KeyboardButton('World skills Russia')
+        btn11 = types.KeyboardButton('Билет в будующее')
+        btn12 = types.KeyboardButton('ПроеКТОриЯ')
+        btn13 = types.KeyboardButton('Форумная кампания')
+        btn14 = types.KeyboardButton('Космофест Восточный')
+        btn15 = types.KeyboardButton('КосмоСтарт')
+        btn16 = types.KeyboardButton('Олимпиада НТИ')
+        btn17 = types.KeyboardButton('Дежурный по планете')
+        btn19 = types.KeyboardButton('Nauka 0+')
+        btn20 = types.KeyboardButton('Профстажировка.рф 2.0')
+        btn21 = types.KeyboardButton('Неделя без турникетов')
+        btn22 = types.KeyboardButton('Космос')
+        btn23 = types.KeyboardButton('Самбо в школу')
+        btn24 = types.KeyboardButton('Лунная одиссея')
+        btn25 = types.KeyboardButton('Большая перемена')
+        markup.add(btn01, btn1, btn2, btn3, btn4, btn5, btn6, btn7, btn8, btn9, btn10, btn11, btn12, btn13, btn14, btn15, btn16, btn17, btn19, btn20, btn21, btn22, btn23, btn24, btn25)
+        token.send_message(message.from_user.id, 'Выберите подраздел', reply_markup=markup)
+
+    elif message.text == 'Кванториум':
+        markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
+        btn1 = types.KeyboardButton('Главное меню')
+        markup.add(btn1)
+        token.send_message(message.from_user.id, 'Раздел:\nКванториум\n\nhttps://space4kids.ru/473', reply_markup=markup, parse_mode='Markdown')
+
+    elif message.text == 'Сириус':
+        markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
+        btn1 = types.KeyboardButton('Главное меню')
+        markup.add(btn1)
+        token.send_message(message.from_user.id, 'Раздел\nСириус\n\nhttps://space4kids.ru/474', reply_markup=markup, parse_mode='Markdown')
+
+    elif message.text == 'Университетская гимназия МГУ':
+        markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
+        btn1 = types.KeyboardButton('Главное меню')
+        markup.add(btn1)
+        token.send_message(message.from_user.id, 'Раздел:\nУниверситетская гимназия МГУ\n\nhttps://space4kids.ru/475', reply_markup=markup, parse_mode='Markdown')
+
+    elif message.text == 'Центр космонавтики и авиации':
+        markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
+        btn1 = types.KeyboardButton('Главное меню')
+        markup.add(btn1)
+        token.send_message(message.from_user.id, 'Раздел:\nЦентр космонавтики и авиации\n\nhttps://space4kids.ru/117', reply_markup=markup, parse_mode='Markdown')
+
+    elif message.text == 'Космический класс':
+        markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
+        btn1 = types.KeyboardButton('Главное меню')
+        markup.add(btn1)
+        token.send_message(message.from_user.id, 'Раздел:\nКосмический класс\n\nhttps://space4kids.ru/477', reply_markup=markup, parse_mode='Markdown')
+
+    elif message.text == 'Космические смены':
+        markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
+        btn1 = types.KeyboardButton('Главное меню')
+        markup.add(btn1)
+        token.send_message(message.from_user.id, 'Раздел:\nКосмические смены\n\nhttps://space4kids.ru/478', reply_markup=markup, parse_mode='Markdown')
+
+    elif message.text == 'Программа "Универсат"':
+        markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
+        btn1 = types.KeyboardButton('Главное меню')
+        markup.add(btn1)
+        token.send_message(message.from_user.id, 'Раздел:\nПрограмма "Универсат"\n\nhttps://space4kids.ru/482', reply_markup=markup, parse_mode='Markdown')
+
+    elif message.text == 'Cansat Russia':
+        markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
+        btn1 = types.KeyboardButton('Главное меню')
+        markup.add(btn1)
+        token.send_message(message.from_user.id, 'Раздел:\nCansat Russia\n\nhttps://space4kids.ru/479', reply_markup=markup, parse_mode='Markdown')
+
+    elif message.text == 'Проект космический урок':
+        markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
+        btn1 = types.KeyboardButton('Главное меню')
+        markup.add(btn1)
+        token.send_message(message.from_user.id, 'Раздел:\nПроект космический урок\n\nhttps://space4kids.ru/490', reply_markup=markup, parse_mode='Markdown')
+
+    elif message.text == 'World skills Russia':
+        markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
+        btn1 = types.KeyboardButton('Главное меню')
+        markup.add(btn1)
+        token.send_message(message.from_user.id, 'Раздел:\nWorld skills Russia\n\nhttps://space4kids.ru/476', reply_markup=markup, parse_mode='Markdown')
+
+    elif message.text == 'Билет в будующее':
+        markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
+        btn1 = types.KeyboardButton('Главное меню')
+        markup.add(btn1)
+        token.send_message(message.from_user.id, 'Раздел:\nБилет в будующее\n\nhttps://space4kids.ru/486', reply_markup=markup, parse_mode='Markdown')
+
+    elif message.text == 'ПроеКТОриЯ':
+        markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
+        btn1 = types.KeyboardButton('Главное меню')
+        markup.add(btn1)
+        token.send_message(message.from_user.id, 'Раздел:\nПроеКТОриЯ\n\nhttps://space4kids.ru/480', reply_markup=markup, parse_mode='Markdown')
+
+    elif message.text == 'Форумная кампания':
+        markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
+        btn1 = types.KeyboardButton('Главное меню')
+        markup.add(btn1)
+        token.send_message(message.from_user.id, 'Раздел:\nФорумная кампания\n\nhttps://space4kids.ru/487', reply_markup=markup, parse_mode='Markdown')
+
+    elif message.text == 'Космофест Восточный':
+        markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
+        btn1 = types.KeyboardButton('Главное меню')
+        markup.add(btn1)
+        token.send_message(message.from_user.id, 'Раздел:\nКосмофест Восточный\n\nhttps://space4kids.ru/483', reply_markup=markup, parse_mode='Markdown')
+
+    elif message.text == 'КосмоСтарт':
+        markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
+        btn1 = types.KeyboardButton('Главное меню')
+        markup.add(btn1)
+        token.send_message(message.from_user.id, 'Раздел:\nКосмоСтарт\n\nhttps://space4kids.ru/484', reply_markup=markup, parse_mode='Markdown')
+
+    elif message.text == 'Олимпиада НТИ':
+        markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
+        btn1 = types.KeyboardButton('Главное меню')
+        markup.add(btn1)
+        token.send_message(message.from_user.id, 'Раздел:\nОлимпиада НТИ\n\nhttps://space4kids.ru/485', reply_markup=markup, parse_mode='Markdown')
+
+    elif message.text == 'Дежурный по планете':
+        markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
+        btn1 = types.KeyboardButton('Главное меню')
+        markup.add(btn1)
+        token.send_message(message.from_user.id, 'Раздел:\nДежурный по планете\n\nhttps://space4kids.ru/488', reply_markup=markup, parse_mode='Markdown')
+
+    elif message.text == 'Nauka 0+':
+        markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
+        btn1 = types.KeyboardButton('Главное меню')
+        markup.add(btn1)
+        token.send_message(message.from_user.id, 'Раздел:\nNauka 0+\n\nhttps://space4kids.ru/576', reply_markup=markup, parse_mode='Markdown')
+
+    elif message.text == 'Профстажировка.рф 2.0':
+        markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
+        btn1 = types.KeyboardButton('Главное меню')
+        markup.add(btn1)
+        token.send_message(message.from_user.id, 'Раздел:\nПрофстажировка.рф 2.0\n\nhttps://space4kids.ru/481', reply_markup=markup, parse_mode='Markdown')
+
+    elif message.text == 'Неделя без турникетов':
+        markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
+        btn1 = types.KeyboardButton('Главное меню')
+        markup.add(btn1)
+        token.send_message(message.from_user.id, 'Раздел:\nНеделя без турникетов\n\nhttps://space4kids.ru/573', reply_markup=markup, parse_mode='Markdown')
+
+    elif message.text == 'Космос':
+        markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
+        btn1 = types.KeyboardButton('Главное меню')
+        markup.add(btn1)
+        token.send_message(message.from_user.id, 'Раздел:\nКосмос\n\nhttps://space4kids.ru/489', reply_markup=markup, parse_mode='Markdown')
+
+    elif message.text == 'Самбо в школу':
+        markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
+        btn1 = types.KeyboardButton('Главное меню')
+        markup.add(btn1)
+        token.send_message(message.from_user.id, 'Раздел:\nСамбо в школу\n\nhttps://space4kids.ru/491', reply_markup=markup, parse_mode='Markdown')
+
+    elif message.text == 'Лунная одиссея':
+        markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
+        btn1 = types.KeyboardButton('Главное меню')
+        markup.add(btn1)
+        token.send_message(message.from_user.id, 'Раздел:\nЛунная одиссея\n\nhttps://space4kids.ru/1186', reply_markup=markup, parse_mode='Markdown')
+
+    elif message.text == 'Большая перемена':
+        markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
+        btn1 = types.KeyboardButton('Главное меню')
+        markup.add(btn1)
+        token.send_message(message.from_user.id, 'Раздел:\nБольшая перемена\n\nhttps://space4kids.ru/1714', reply_markup=markup, parse_mode='Markdown')
+
+    elif message.text == 'Знания':
+        markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
+        btn01 = types.KeyboardButton('Главное меню')
+        btn1 = types.KeyboardButton('Лекции')
+        btn2 = types.KeyboardButton('Книги')
+        btn3 = types.KeyboardButton('Документальные фильмы')
+        btn4 = types.KeyboardButton('Телепередачи')
+        btn5 = types.KeyboardButton('Художественные фильмы')
+        btn6 = types.KeyboardButton('Мультфильмы')
+        btn7 = types.KeyboardButton('Доступно о космосе')
+        btn8 = types.KeyboardButton('Журналы')
+        markup.add(btn01, btn1, btn2, btn3, btn4, btn5, btn6, btn7, btn8)
+        token.send_message(message.from_user.id, 'Выберите подраздел', reply_markup=markup)
+
+    elif message.text == 'Лекции':
+        markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
+        btn1 = types.KeyboardButton('Главное меню')
+        markup.add(btn1)
+        token.send_message(message.from_user.id, 'Раздел:\nЛекции\n\nhttps://space4kids.ru/118', reply_markup=markup, parse_mode='Markdown')
+
+    elif message.text == 'Книги':
+        markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
+        btn1 = types.KeyboardButton('Главное меню')
+        markup.add(btn1)
+        token.send_message(message.from_user.id, 'Раздел:\nКниги\n\nhttps://space4kids.ru/127', reply_markup=markup, parse_mode='Markdown')
+
+    elif message.text == 'Документальные фильмы':
+        markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
+        btn1 = types.KeyboardButton('Главное меню')
+        markup.add(btn1)
+        token.send_message(message.from_user.id, 'Раздел:\nДокументальные фильмы\n\nhttps://space4kids.ru/126', reply_markup=markup, parse_mode='Markdown')
+
+    elif message.text == 'Телепередачи':
+        markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
+        btn1 = types.KeyboardButton('Главное меню')
+        markup.add(btn1)
+        token.send_message(message.from_user.id, 'Раздел:\nТелепередачи\n\nhttps://space4kids.ru/128', reply_markup=markup, parse_mode='Markdown')
+
+    elif message.text == 'Художественные фильмы':
+        markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
+        btn1 = types.KeyboardButton('Главное меню')
+        markup.add(btn1)
+        token.send_message(message.from_user.id, 'Раздел:\nХудожественные фильмы\n\nhttps://space4kids.ru/656', reply_markup=markup, parse_mode='Markdown')
+
+    elif message.text == 'Мультфильмы':
+        markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
+        btn1 = types.KeyboardButton('Главное меню')
+        markup.add(btn1)
+        token.send_message(message.from_user.id, 'Раздел:\nМультфильмы\n\nhttps://space4kids.ru/1753', reply_markup=markup, parse_mode='Markdown')
+
+    elif message.text == 'Доступно о космосе':
+        markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
+        btn1 = types.KeyboardButton('Главное меню')
+        markup.add(btn1)
+        token.send_message(message.from_user.id, 'Раздел:\nДоступно о космосе\n\nhttps://space4kids.ru/125', reply_markup=markup, parse_mode='Markdown')
+
+    elif message.text == 'Журналы':
+        markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
+        btn1 = types.KeyboardButton('Главное меню')
+        markup.add(btn1)
+        token.send_message(message.from_user.id, 'Раздел:\nЖурналы\n\nhttps://space4kids.ru/980', reply_markup=markup, parse_mode='Markdown')
+
+    elif message.text == 'Навигация профессий':
+        markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
+        btn01 = types.KeyboardButton('Главное меню')
+        btn1 = types.KeyboardButton('Каталог профессий')
+        btn2 = types.KeyboardButton('Образовательные организации')
+        btn3 = types.KeyboardButton('Организации госкорпарации "Роскосмос"')
+        btn4 = types.KeyboardButton('Профориентационное тестирование')
+        markup.add(btn01, btn1, btn2, btn3, btn4)
+        token.send_message(message.from_user.id, 'Выберите подраздел', reply_markup=markup)
+
+    elif message.text == 'Каталог профессий':
+        markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
+        btn1 = types.KeyboardButton('Главное меню')
+        markup.add(btn1)
+        token.send_message(message.from_user.id, 'Раздел:\nКаталог профессий\n\nhttps://space4kids.ru/108', reply_markup=markup, parse_mode='Markdown')
+
+    elif message.text == 'Образовательные организации':
+        markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
+        btn1 = types.KeyboardButton('Главное меню')
+        markup.add(btn1)
+        token.send_message(message.from_user.id, 'Раздел:\nОбразовательные организации\n\nhttps://space4kids.ru/110', reply_markup=markup, parse_mode='Markdown')
+
+    elif message.text == 'Организации госкорпарации "Роскосмос"':
+        markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
+        btn1 = types.KeyboardButton('Главное меню')
+        markup.add(btn1)
+        token.send_message(message.from_user.id, 'Раздел:\nОрганизации госкорпарации "Роскосмос"\n\nhttps://space4kids.ru/950', reply_markup=markup, parse_mode='Markdown')
+
+    elif message.text == 'Профориентационное тестирование':
+        markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
+        btn1 = types.KeyboardButton('Главное меню')
+        markup.add(btn1)
+        token.send_message(message.from_user.id, 'Раздел:\nПрофориентационное тестирование\n\nhttps://space4kids.ru/112', reply_markup=markup, parse_mode='Markdown')
+
+    elif message.text == 'Учителю':
+        markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
+        btn01 = types.KeyboardButton('Главное меню')
+        btn1 = types.KeyboardButton('Концепция программ "Космический класс"')
+        btn2 = types.KeyboardButton('Методические материалы')
+        btn3 = types.KeyboardButton('Музеи и центры просвещения')
+        btn4 = types.KeyboardButton('Олимпиады и конкурсы')
+        btn5 = types.KeyboardButton('Проектная деятельность')
+        btn6 = types.KeyboardButton('Уроки и эксперименты')
+        btn7 = types.KeyboardButton('Плакаты и постеры')
+        markup.add(btn01, btn1, btn2, btn3, btn4, btn5, btn6, btn7)
+        token.send_message(message.from_user.id, 'Выберите подраздел', reply_markup=markup)
+
+    elif message.text == 'Концепция программ "Космический класс"':
+        markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
+        btn1 = types.KeyboardButton('Главное меню')
+        markup.add(btn1)
+        token.send_message(message.from_user.id, 'Раздел:\nКонцепция программ "Космический класс"\n\nhttps://space4kids.ru/120', reply_markup=markup, parse_mode='Markdown')
+
+    elif message.text == 'Методические материалы':
+        markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
+        btn1 = types.KeyboardButton('Главное меню')
+        markup.add(btn1)
+        token.send_message(message.from_user.id, 'Раздел:\nМетодические материалы\n\nhttps://space4kids.ru/121', reply_markup=markup, parse_mode='Markdown')
+
+    elif message.text == 'Музеи и центры просвещения':
+        markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
+        btn1 = types.KeyboardButton('Главное меню')
+        markup.add(btn1)
+        token.send_message(message.from_user.id, 'Раздел:\nМузеи и центры просвещения\n\nhttps://space4kids.ru/122', reply_markup=markup, parse_mode='Markdown')
+
+    elif message.text == 'Олимпиады и конкурсы':
+        markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
+        btn1 = types.KeyboardButton('Главное меню')
+        markup.add(btn1)
+        token.send_message(message.from_user.id, 'Раздел:\nОлимпиады и конкурсы\n\nhttps://space4kids.ru/124', reply_markup=markup, parse_mode='Markdown')
+
+    elif message.text == 'Проектная деятельность':
+        markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
+        btn1 = types.KeyboardButton('Главное меню')
+        markup.add(btn1)
+        token.send_message(message.from_user.id, 'Раздел:\nПроектная деятельность\n\nhttps://space4kids.ru/880', reply_markup=markup, parse_mode='Markdown')
+
+    elif message.text == 'Уроки и эксперименты':
+        markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
+        btn1 = types.KeyboardButton('Главное меню')
+        markup.add(btn1)
+        token.send_message(message.from_user.id, 'Раздел:\nУроки и эксперименты\n\nhttps://space4kids.ru/881', reply_markup=markup, parse_mode='Markdown')
+
+    elif message.text == 'Плакаты и постеры':
+        markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
+        btn1 = types.KeyboardButton('Главное меню')
+        markup.add(btn1)
+        token.send_message(message.from_user.id, 'Раздел:\nПлакаты и постеры\n\nhttps://space4kids.ru/1707', reply_markup=markup, parse_mode='Markdown')
+
+    elif message.text == 'Медиа':
+        markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
+        btn01 = types.KeyboardButton('Главное меню')
+        btn1 = types.KeyboardButton('Фото')
+        btn2 = types.KeyboardButton('Видео')
+        btn3 = types.KeyboardButton('Интерактив')
+        btn4 = types.KeyboardButton('Правила использования мадиаматериалов')
+        markup.add(btn01, btn1, btn2, btn3, btn4)
+        token.send_message(message.from_user.id, 'Выберите подраздел', reply_markup=markup)
+
+
+    elif message.text == 'Фото':
+        markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
+        btn01 = types.KeyboardButton('Главное меню')
+        btn1 = types.KeyboardButton('Путешествуй по миру с космонавтом')
+        btn2 = types.KeyboardButton('Пуски ракет-носителей')
+        markup.add(btn01, btn1, btn2)
+        token.send_message(message.from_user.id, 'Выберите подраздел', reply_markup=markup)
+
+    elif message.text == 'Путешествуй по миру с космонавтом':
+        markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
+        btn1 = types.KeyboardButton('Главное меню')
+        markup.add(btn1)
+        token.send_message(message.from_user.id, 'Раздел:\nПутешествуй по миру с космонавтом\n\nhttps://space4kids.ru/113', reply_markup=markup, parse_mode='Markdown')
+
+    elif message.text == 'Пуски ракет-носителей':
+        markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
+        btn1 = types.KeyboardButton('Главное меню')
+        markup.add(btn1)
+        token.send_message(message.from_user.id, 'Раздел:\nПуски ракет-носителей\n\nhttps://space4kids.ru/130', reply_markup=markup, parse_mode='Markdown')
+
+
+    elif message.text == 'Видео':
+        markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
+        btn01 = types.KeyboardButton('Главное меню')
+        btn1 = types.KeyboardButton('Если бы')
+        btn2 = types.KeyboardButton('...Замри!')
+        btn3 = types.KeyboardButton('Звезда по имени МКС')
+        btn4 = types.KeyboardButton('Открытый космос')
+        btn5 = types.KeyboardButton('Мы - российский космос')
+        btn6 = types.KeyboardButton('Мы первые!')
+        btn7 = types.KeyboardButton('Ил-76 МДК: полёт в невесомость')
+        btn8 = types.KeyboardButton('Шоу "МКС на связи"')
+        btn9 = types.KeyboardButton('Легендарная "Синяя птица" - спасатель космонавтов')
+        btn10 = types.KeyboardButton('Планетарий №1, Санкт-Петербург')
+        btn11 = types.KeyboardButton('Видео полетов в стратосферу на МиГ 29')
+        markup.add(btn01, btn1, btn2, btn3, btn4, btn5, btn6, btn7, btn8, btn9, btn10, btn11)
+        token.send_message(message.from_user.id, 'Выберите подраздел', reply_markup=markup)
+
+    elif message.text == 'Если бы':
+        markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
+        btn1 = types.KeyboardButton('Главное меню')
+        markup.add(btn1)
+        token.send_message(message.from_user.id, 'Раздел:\nЕсли бы\n\nhttps://space4kids.ru/675', reply_markup=markup,
+                           parse_mode='Markdown')
+
+    elif message.text == '...Замри!':
+        markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
+        btn1 = types.KeyboardButton('Главное меню')
+        markup.add(btn1)
+        token.send_message(message.from_user.id, 'Раздел:\n...Замри!\n\nhttps://space4kids.ru/680', reply_markup=markup,
+                           parse_mode='Markdown')
+
+    elif message.text == 'Звезда по имени МКС':
+        markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
+        btn1 = types.KeyboardButton('Главное меню')
+        markup.add(btn1)
+        token.send_message(message.from_user.id, 'Раздел:\nЗвезда по имени МКС\n\nhttps://space4kids.ru/686',
+                           reply_markup=markup, parse_mode='Markdown')
+
+    elif message.text == 'Открытый космос':
+        markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
+        btn1 = types.KeyboardButton('Главное меню')
+        markup.add(btn1)
+        token.send_message(message.from_user.id, 'Раздел:\nОткрытый космос\n\nhttps://space4kids.ru/683',
+                           reply_markup=markup, parse_mode='Markdown')
+
+    elif message.text == 'Мы - российский космос':
+        markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
+        btn1 = types.KeyboardButton('Главное меню')
+        markup.add(btn1)
+        token.send_message(message.from_user.id, 'Раздел:\nМы - российский космос\n\nhttps://space4kids.ru/695',
+                           reply_markup=markup, parse_mode='Markdown')
+
+    elif message.text == 'Мы первые!':
+        markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
+        btn1 = types.KeyboardButton('Главное меню')
+        markup.add(btn1)
+        token.send_message(message.from_user.id, 'Раздел:\nМы первые!\n\nhttps://space4kids.ru/697',
+                           reply_markup=markup, parse_mode='Markdown')
+
+    elif message.text == 'Ил-76 МДК: полёт в невесомость':
+        markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
+        btn1 = types.KeyboardButton('Главное меню')
+        markup.add(btn1)
+        token.send_message(message.from_user.id, 'Раздел:\nИл-76 МДК: полёт в невесомость\n\nhttps://space4kids.ru/711',
+                           reply_markup=markup, parse_mode='Markdown')
+
+    elif message.text == 'Шоу "МКС на связи"':
+        markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
+        btn1 = types.KeyboardButton('Главное меню')
+        markup.add(btn1)
+        token.send_message(message.from_user.id, 'Раздел:\nШоу "МКС на связи"\n\nhttps://space4kids.ru/701',
+                           reply_markup=markup, parse_mode='Markdown')
+
+    elif message.text == 'Легендарная "Синяя птица" - спасатель космонавтов':
+        markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
+        btn1 = types.KeyboardButton('Главное меню')
+        markup.add(btn1)
+        token.send_message(message.from_user.id,
+                           'Раздел:\nЛегендарная "Синяя птица" - спасатель космонавтов\n\nhttps://space4kids.ru/1483',
+                           reply_markup=markup, parse_mode='Markdown')
+
+    elif message.text == 'Планетарий №1, Санкт-Петербург':
+        markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
+        btn1 = types.KeyboardButton('Главное меню')
+        markup.add(btn1)
+        token.send_message(message.from_user.id,
+                           'Раздел:\nПланетарий №1, Санкт-Петербург\n\nhttps://space4kids.ru/1708', reply_markup=markup,
+                           parse_mode='Markdown')
+
+    elif message.text == 'Видео полетов в стратосферу на МиГ 29':
+        markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
+        btn1 = types.KeyboardButton('Главное меню')
+        markup.add(btn1)
+        token.send_message(message.from_user.id,
+                           'Раздел:\nВидео полетов в стратосферу на МиГ 29\n\nhttps://space4kids.ru/1715',
+                           reply_markup=markup, parse_mode='Markdown')
+
+    elif message.text == 'Интерактив':
+        markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
+        btn01 = types.KeyboardButton('Главное меню')
+        btn1 = types.KeyboardButton('Центр подготовки космонавтов (ЦПК)')
+        btn2 = types.KeyboardButton('Музей ЦПК')
+        btn3 = types.KeyboardButton('Космоцентр ЦПК')
+        btn4 = types.KeyboardButton('Авиационный парк ЦПК')
+        btn5 = types.KeyboardButton('Медицинская база ЦПК')
+        btn6 = types.KeyboardButton('НПП "Звезда"')
+        btn7 = types.KeyboardButton('Тур по МКС с Андреем Борисенко')
+        btn8 = types.KeyboardButton('Полет в стратосферу')
+        btn9 = types.KeyboardButton('Пусковая компания ТПК "Союз МС-05"')
+        btn10 = types.KeyboardButton('VR360 zero gravity')
+        btn11 = types.KeyboardButton('Мемориальный музей космонавтики')
+        btn12 = types.KeyboardButton('Космос 360: тренировка в невесомости на самолёте Ил-76')
+        btn13 = types.KeyboardButton('ВДНХ, Павильон Космос')
+        btn14 = types.KeyboardButton('Проект "Русский Космос 360"')
+        btn15 = types.KeyboardButton('Экскурсия по Байконуру 360, 8k, vr')
+        btn16 = types.KeyboardButton('Стартовый комплекс и командный пункт ракеты "Энергия". 360, 4k')
+        btn17 = types.KeyboardButton('Виртуальный тур по музею АО "НПО Лавочкина"')
+        markup.add(btn01, btn1, btn2, btn3, btn4, btn5, btn6, btn7, btn8, btn9, btn10, btn11, btn12, btn13, btn14, btn15, btn16, btn17)
+        token.send_message(message.from_user.id, 'Выберите подраздел', reply_markup=markup)
+
+    elif message.text == 'Центр подготовки космонавтов (ЦПК)':
+        markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
+        btn1 = types.KeyboardButton('Главное меню')
+        markup.add(btn1)
+        token.send_message(message.from_user.id,
+                           'Раздел:\nЦентр подготовки космонавтов (ЦПК)\n\nhttps://space4kids.ru/133',
+                           reply_markup=markup, parse_mode='Markdown')
+
+    elif message.text == 'Музей ЦПК':
+        markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
+        btn1 = types.KeyboardButton('Главное меню')
+        markup.add(btn1)
+        token.send_message(message.from_user.id,
+                           'Раздел:\nМузей ЦПК\n\nhttps://space4kids.ru/134',
+                           reply_markup=markup, parse_mode='Markdown')
+
+    elif message.text == 'Космоцентр ЦПК':
+        markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
+        btn1 = types.KeyboardButton('Главное меню')
+        markup.add(btn1)
+        token.send_message(message.from_user.id,
+                           'Раздел:\nКосмоцентр ЦПК\n\nhttps://space4kids.ru/135',
+                           reply_markup=markup, parse_mode='Markdown')
+
+    elif message.text == 'Авиационный парк ЦПК':
+        markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
+        btn1 = types.KeyboardButton('Главное меню')
+        markup.add(btn1)
+        token.send_message(message.from_user.id,
+                           'Раздел:\nАвиационный парк ЦПК\n\nhttps://space4kids.ru/136',
+                           reply_markup=markup, parse_mode='Markdown')
+
+    elif message.text == 'Медицинская база ЦПК':
+        markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
+        btn1 = types.KeyboardButton('Главное меню')
+        markup.add(btn1)
+        token.send_message(message.from_user.id,
+                           'Раздел:\nМедицинская база ЦПК\n\nhttps://space4kids.ru/137',
+                           reply_markup=markup, parse_mode='Markdown')
+
+    elif message.text == 'НПП "Звезда"':
+        markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
+        btn1 = types.KeyboardButton('Главное меню')
+        markup.add(btn1)
+        token.send_message(message.from_user.id,
+                           'Раздел:\nНПП "Звезда"\n\nhttps://space4kids.ru/632',
+                           reply_markup=markup, parse_mode='Markdown')
+
+    elif message.text == 'Тур по МКС с Андреем Борисенко':
+        markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
+        btn1 = types.KeyboardButton('Главное меню')
+        markup.add(btn1)
+        token.send_message(message.from_user.id,
+                           'Раздел:\nТур по МКС с Андреем Борисенко\n\nhttps://space4kids.ru/682',
+                           reply_markup=markup, parse_mode='Markdown')
+
+    elif message.text == 'Полет в стратосферу':
+        markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
+        btn1 = types.KeyboardButton('Главное меню')
+        markup.add(btn1)
+        token.send_message(message.from_user.id,
+                           'Раздел:\nПолет в стратосферу\n\nhttps://space4kids.ru/687',
+                           reply_markup=markup, parse_mode='Markdown')
+
+    elif message.text == 'Пусковая компания ТПК "Союз МС-05"':
+        markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
+        btn1 = types.KeyboardButton('Главное меню')
+        markup.add(btn1)
+        token.send_message(message.from_user.id,
+                           'Раздел:\nПусковая компания ТПК "Союз МС-05"\n\nhttps://space4kids.ru/688',
+                           reply_markup=markup, parse_mode='Markdown')
+
+    elif message.text == 'VR360 zero gravity':
+        markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
+        btn1 = types.KeyboardButton('Главное меню')
+        markup.add(btn1)
+        token.send_message(message.from_user.id,
+                           'Раздел:\nVR360 zero gravity\n\nhttps://space4kids.ru/1296',
+                           reply_markup=markup, parse_mode='Markdown')
+
+    elif message.text == 'Мемориальный музей космонавтики':
+        markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
+        btn1 = types.KeyboardButton('Главное меню')
+        markup.add(btn1)
+        token.send_message(message.from_user.id,
+                           'Раздел:\nМемориальный музей космонавтики\n\nhttps://space4kids.ru/871',
+                           reply_markup=markup, parse_mode='Markdown')
+
+    elif message.text == 'Космос 360: тренировка в невесомости на самолёте Ил-76':
+        markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
+        btn1 = types.KeyboardButton('Главное меню')
+        markup.add(btn1)
+        token.send_message(message.from_user.id,
+                           'Раздел:\nКосмос 360: тренировка в невесомости на самолёте Ил-76\n\nhttps://space4kids.ru/1302',
+                           reply_markup=markup, parse_mode='Markdown')
+
+    elif message.text == 'ВДНХ, Павильон Космос':
+        markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
+        btn1 = types.KeyboardButton('Главное меню')
+        markup.add(btn1)
+        token.send_message(message.from_user.id,
+                           'Раздел:\nВДНХ, Павильон Космос\n\nhttps://space4kids.ru/1482',
+                           reply_markup=markup, parse_mode='Markdown')
+
+    elif message.text == 'Проект "Русский Космос 360"':
+        markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
+        btn1 = types.KeyboardButton('Главное меню')
+        markup.add(btn1)
+        token.send_message(message.from_user.id,
+                           'Раздел:\nПроект "Русский Космос 360"\n\nhttps://space4kids.ru/1701',
+                           reply_markup=markup, parse_mode='Markdown')
+
+    elif message.text == 'Экскурсия по Байконуру 360, 8k, vr':
+        markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
+        btn1 = types.KeyboardButton('Главное меню')
+        markup.add(btn1)
+        token.send_message(message.from_user.id,
+                           'Раздел:\nЭкскурсия по Байконуру 360, 8k, vr\n\nhttps://space4kids.ru/2236',
+                           reply_markup=markup, parse_mode='Markdown')
+
+    elif message.text == 'Стартовый комплекс и командный пункт ракеты "Энергия". 360, 4k':
+        markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
+        btn1 = types.KeyboardButton('Главное меню')
+        markup.add(btn1)
+        token.send_message(message.from_user.id,
+                           'Раздел:\nСтартовый комплекс и командный пункт ракеты "Энергия". 360, 4k\n\nhttps://space4kids.ru/2237',
+                           reply_markup=markup, parse_mode='Markdown')
+
+    elif message.text == 'Виртуальный тур по музею АО "НПО Лавочкина"':
+        markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
+        btn1 = types.KeyboardButton('Главное меню')
+        markup.add(btn1)
+        token.send_message(message.from_user.id,
+                           'Раздел:\nВиртуальный тур по музею АО "НПО Лавочкина"\n\nhttps://space4kids.ru/2262',
+                           reply_markup=markup, parse_mode='Markdown')
+
+    elif message.text == 'Правила использования мадиаматериалов':
+        markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
+        btn1 = types.KeyboardButton('Главное меню')
+        markup.add(btn1)
+        token.send_message(message.from_user.id,
+                           'Правила использования мадиаматериалов\n\nhttps://www.roscosmos.ru/22650',
+                           reply_markup=markup, parse_mode='Markdown')
+
+    elif message.text == 'Поиск':
+        markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
+        btn1 = types.KeyboardButton('Главное меню')
+        markup.add(btn1)
+        token.send_message(message.from_user.id, 'Перейдя по [ссылке] https://space4kids.ru/search вы сможете ввести запрос самостоятельно',
+                           reply_markup=markup, parse_mode='Markdown')
+
+
+    elif message.text == 'English':
+        markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
+        btn1 = types.KeyboardButton('Russian space')
+        btn2 = types.KeyboardButton('News')
+        btn3 = types.KeyboardButton('Projects and activities')
+        btn4 = types.KeyboardButton('Knowledge')
+        btn5 = types.KeyboardButton('Navigation of professions')
+        btn6 = types.KeyboardButton('To the teacher')
+        btn7 = types.KeyboardButton('Media')
+        btn8 = types.KeyboardButton('Search')
+        btn9 = types.KeyboardButton('You definitely didnt know that!')
+        btn10 = types.KeyboardButton('Language selection')
+        markup.add(btn1, btn2, btn3, btn4, btn5, btn6, btn7, btn8, btn9, btn10)
+        token.send_message(message.from_user.id, 'You are welcomed by the bot for the Space4Kids website', reply_markup=markup)
+        token.send_message(message.from_user.id, 'The Space4Kids website was created so that you can get up-to-date information and new knowledge about space')
+        token.send_message(message.from_user.id, 'The bot will help you find what you want in seconds')
+        token.send_message(message.from_user.id, 'Select the section you are interested in', reply_markup=markup)
+
+    elif message.text == 'You definitely didnt know that!':
+        for i in range(10):
+            token.send_message(message.from_user.id, random.choice(fact_sp_en))
+
+    elif message.text == 'Russian space':
+        markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
+        btn1 = types.KeyboardButton('History')
+        btn2 = types.KeyboardButton('Technic')
+        btn3 = types.KeyboardButton('Cosmodromes')
+        btn4 = types.KeyboardButton('Astronauts')
+        btn5 = types.KeyboardButton('Follow the astronaut')
+        btn6 = types.KeyboardButton('Main Menu')
+        markup.add(btn1, btn2, btn3, btn4, btn5, btn6)
+        token.send_message(message.from_user.id, 'Select a subsection', reply_markup=markup)
+
+    elif message.text == 'History':
+        markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
+        btn1 = types.KeyboardButton('Main Menu')
+        markup.add(btn1)
+        token.send_message(message.from_user.id, 'Chapter:\nHistory\n\nhttps://space4kids.ru/140', reply_markup=markup, parse_mode='Markdown')
+
+    elif message.text == 'Technic':
+        markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
+        btn1 = types.KeyboardButton('Main Menu')
+        markup.add(btn1)
+        token.send_message(message.from_user.id, 'Chapter:\nTechnic\n\nhttps://space4kids.ru/138', reply_markup=markup, parse_mode='Markdown')
+
+    elif message.text == 'Cosmodromes':
+        markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
+        btn1 = types.KeyboardButton('Main Menu')
+        markup.add(btn1)
+        token.send_message(message.from_user.id, 'Chapter:\nCosmodromes\n\nhttps://space4kids.ru/139', reply_markup=markup, parse_mode='Markdown')
+
+    elif message.text == 'Astronauts':
+        markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
+        btn1 = types.KeyboardButton('Main Menu')
+        markup.add(btn1)
+        token.send_message(message.from_user.id, 'Chapter:\nAstronauts\n\nhttps://space4kids.ru/40', reply_markup=markup, parse_mode='Markdown')
+
+    elif message.text == 'Follow the astronaut':
+        markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
+        btn1 = types.KeyboardButton('Main Menu')
+        markup.add(btn1)
+        token.send_message(message.from_user.id, 'Chapter:\nFollow the astronaut\n\nhttps://space4kids.ru/131', reply_markup=markup, parse_mode='Markdown')
+
+    elif message.text == 'Main Menu':
+        markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
+        btn1 = types.KeyboardButton('Russian space')
+        btn2 = types.KeyboardButton('News')
+        btn3 = types.KeyboardButton('Projects and activities')
+        btn4 = types.KeyboardButton('Knowledge')
+        btn5 = types.KeyboardButton('Navigation of professions')
+        btn6 = types.KeyboardButton('To the teacher')
+        btn7 = types.KeyboardButton('Media')
+        btn8 = types.KeyboardButton('Search')
+        btn9 = types.KeyboardButton('You definitely didnt know that!')
+        btn10 = types.KeyboardButton('Language selection')
+        markup.add(btn1, btn2, btn3, btn4, btn5, btn6, btn7, btn8, btn9, btn10)
+        token.send_message(message.from_user.id, 'Select the section you are interested in', reply_markup=markup)
+
+    elif message.text == 'News':
+        markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
+        btn1 = types.KeyboardButton('Main Menu')
+        markup.add(btn1)
+        token.send_message(message.from_user.id, 'Chapter:\nNews\n\nhttps://space4kids.ru/101', reply_markup=markup, parse_mode='Markdown')
+
+    elif message.text == 'Projects and activities':
+        markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
+        btn01 = types.KeyboardButton('Main Menu')
+        btn1 = types.KeyboardButton('Quantorium')
+        btn2 = types.KeyboardButton('Sirius')
+        btn3 = types.KeyboardButton('MSU University Gymnasium')
+        btn4 = types.KeyboardButton('Cosmonautics and Aviation Center')
+        btn5 = types.KeyboardButton('Space Class')
+        btn6 = types.KeyboardButton('Space shifts')
+        btn7 = types.KeyboardButton('The Universat Program')
+        btn8 = types.KeyboardButton('Cansat Russia')
+        btn9 = types.KeyboardButton('The Space lesson project')
+        btn10 = types.KeyboardButton('World skills Russia')
+        btn11 = types.KeyboardButton('Ticket to the future')
+        btn12 = types.KeyboardButton('Projection Room')
+        btn13 = types.KeyboardButton('Forum campaign')
+        btn14 = types.KeyboardButton('Vostochny Cosmofest')
+        btn15 = types.KeyboardButton('CosmoStart')
+        btn16 = types.KeyboardButton('NTI Olympiad')
+        btn17 = types.KeyboardButton('Planet Duty Officer')
+        btn19 = types.KeyboardButton('Science 0+')
+        btn20 = types.KeyboardButton('Professional training.rf 2.0')
+        btn21 = types.KeyboardButton('A week without turnstiles')
+        btn22 = types.KeyboardButton('Space')
+        btn23 = types.KeyboardButton('Sambo to school')
+        btn24 = types.KeyboardButton('Lunar Odyssey')
+        btn25 = types.KeyboardButton('Big change')
+        markup.add(btn01, btn1, btn2, btn3, btn4, btn5, btn6, btn7, btn8, btn9, btn10, btn11, btn12, btn13, btn14, btn15, btn16, btn17, btn19, btn20, btn21, btn22, btn23, btn24, btn25)
+        token.send_message(message.from_user.id, 'Select a subsection', reply_markup=markup)
+
+    elif message.text == 'Quantorium':
+        markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
+        btn1 = types.KeyboardButton('Main Menu')
+        markup.add(btn1)
+        token.send_message(message.from_user.id, 'Chapter:\nQuantorium\n\nhttps://space4kids.ru/473', reply_markup=markup, parse_mode='Markdown')
+
+    elif message.text == 'Sirius':
+        markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
+        btn1 = types.KeyboardButton('Main Menu')
+        markup.add(btn1)
+        token.send_message(message.from_user.id, 'Chapter\nSirius\n\nhttps://space4kids.ru/474', reply_markup=markup, parse_mode='Markdown')
+
+    elif message.text == 'MSU University Gymnasium':
+        markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
+        btn1 = types.KeyboardButton('Main Menu')
+        markup.add(btn1)
+        token.send_message(message.from_user.id, 'Chapter:\nMSU University Gymnasium\n\nhttps://space4kids.ru/475', reply_markup=markup, parse_mode='Markdown')
+
+    elif message.text == 'Cosmonautics and Aviation Center':
+        markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
+        btn1 = types.KeyboardButton('Main Menu')
+        markup.add(btn1)
+        token.send_message(message.from_user.id, 'Chapter:\nCosmonautics and Aviation Center\n\nhttps://space4kids.ru/117', reply_markup=markup, parse_mode='Markdown')
+
+    elif message.text == 'Space Class':
+        markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
+        btn1 = types.KeyboardButton('Main Menu')
+        markup.add(btn1)
+        token.send_message(message.from_user.id, 'Chapter:\nSpace Class\n\nhttps://space4kids.ru/477', reply_markup=markup, parse_mode='Markdown')
+
+    elif message.text == 'Space shifts':
+        markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
+        btn1 = types.KeyboardButton('Main Menu')
+        markup.add(btn1)
+        token.send_message(message.from_user.id, 'Chapter:\nSpace shifts\n\nhttps://space4kids.ru/478', reply_markup=markup, parse_mode='Markdown')
+
+    elif message.text == 'The Universat Program':
+        markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
+        btn1 = types.KeyboardButton('Main Menu')
+        markup.add(btn1)
+        token.send_message(message.from_user.id, 'Chapter:\nThe Universat Program\n\nhttps://space4kids.ru/482', reply_markup=markup, parse_mode='Markdown')
+
+    elif message.text == 'Cansat Russia':
+        markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
+        btn1 = types.KeyboardButton('Main Menu')
+        markup.add(btn1)
+        token.send_message(message.from_user.id, 'Chapter:\nCansat Russia\n\nhttps://space4kids.ru/479', reply_markup=markup, parse_mode='Markdown')
+
+    elif message.text == 'The Space lesson project':
+        markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
+        btn1 = types.KeyboardButton('Main Menu')
+        markup.add(btn1)
+        token.send_message(message.from_user.id, 'Chapter:\nThe Space lesson project\n\nhttps://space4kids.ru/490', reply_markup=markup, parse_mode='Markdown')
+
+    elif message.text == 'World skills Russia':
+        markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
+        btn1 = types.KeyboardButton('Main Menu')
+        markup.add(btn1)
+        token.send_message(message.from_user.id, 'Chapter:\nWorld skills Russia\n\nhttps://space4kids.ru/476', reply_markup=markup, parse_mode='Markdown')
+
+    elif message.text == 'Ticket to the future':
+        markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
+        btn1 = types.KeyboardButton('Main Menu')
+        markup.add(btn1)
+        token.send_message(message.from_user.id, 'Chapter:\nTicket to the future\n\nhttps://space4kids.ru/486', reply_markup=markup, parse_mode='Markdown')
+
+    elif message.text == 'Projection Room':
+        markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
+        btn1 = types.KeyboardButton('Main Menu')
+        markup.add(btn1)
+        token.send_message(message.from_user.id, 'Chapter:\nProjection Room\n\nhttps://space4kids.ru/480', reply_markup=markup, parse_mode='Markdown')
+
+    elif message.text == 'Forum campaign':
+        markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
+        btn1 = types.KeyboardButton('Main Menu')
+        markup.add(btn1)
+        token.send_message(message.from_user.id, 'Chapter:\nForum campaign\n\nhttps://space4kids.ru/487', reply_markup=markup, parse_mode='Markdown')
+
+    elif message.text == 'Vostochny Cosmofest':
+        markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
+        btn1 = types.KeyboardButton('Main Menu')
+        markup.add(btn1)
+        token.send_message(message.from_user.id, 'Chapter:\nVostochny Cosmofest\n\nhttps://space4kids.ru/483', reply_markup=markup, parse_mode='Markdown')
+
+    elif message.text == 'CosmoStart':
+        markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
+        btn1 = types.KeyboardButton('Main Menu')
+        markup.add(btn1)
+        token.send_message(message.from_user.id, 'Chapter:\nCosmoStart\n\nhttps://space4kids.ru/484', reply_markup=markup, parse_mode='Markdown')
+
+    elif message.text == 'NTI Olympiad':
+        markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
+        btn1 = types.KeyboardButton('Main Menu')
+        markup.add(btn1)
+        token.send_message(message.from_user.id, 'Chapter:\nNTI Olympiad\n\nhttps://space4kids.ru/485', reply_markup=markup, parse_mode='Markdown')
+
+    elif message.text == 'Planet Duty Officer':
+        markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
+        btn1 = types.KeyboardButton('Main Menu')
+        markup.add(btn1)
+        token.send_message(message.from_user.id, 'Chapter:\nPlanet Duty Officer\n\nhttps://space4kids.ru/488', reply_markup=markup, parse_mode='Markdown')
+
+    elif message.text == 'Science 0+':
+        markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
+        btn1 = types.KeyboardButton('Main Menu')
+        markup.add(btn1)
+        token.send_message(message.from_user.id, 'Chapter:\nScience 0+\n\nhttps://space4kids.ru/576', reply_markup=markup, parse_mode='Markdown')
+
+    elif message.text == 'Professional training.rf 2.0':
+        markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
+        btn1 = types.KeyboardButton('Main Menu')
+        markup.add(btn1)
+        token.send_message(message.from_user.id, 'Chapter:\nProfessional training.rf 2.0\n\nhttps://space4kids.ru/481', reply_markup=markup, parse_mode='Markdown')
+
+    elif message.text == 'A week without turnstiles':
+        markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
+        btn1 = types.KeyboardButton('Main Menu')
+        markup.add(btn1)
+        token.send_message(message.from_user.id, 'Chapter:\nA week without turnstiles\n\nhttps://space4kids.ru/573', reply_markup=markup, parse_mode='Markdown')
+
+    elif message.text == 'Space':
+        markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
+        btn1 = types.KeyboardButton('Main Menu')
+        markup.add(btn1)
+        token.send_message(message.from_user.id, 'Chapter:\nSpace\n\nhttps://space4kids.ru/489', reply_markup=markup, parse_mode='Markdown')
+
+    elif message.text == 'Sambo to school':
+        markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
+        btn1 = types.KeyboardButton('Main Menu')
+        markup.add(btn1)
+        token.send_message(message.from_user.id, 'Chapter:\nSambo to school\n\nhttps://space4kids.ru/491', reply_markup=markup, parse_mode='Markdown')
+
+    elif message.text == 'Lunar Odyssey':
+        markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
+        btn1 = types.KeyboardButton('Main Menu')
+        markup.add(btn1)
+        token.send_message(message.from_user.id, 'Chapter:\nLunar Odyssey\n\nhttps://space4kids.ru/1186', reply_markup=markup, parse_mode='Markdown')
+
+    elif message.text == 'Big change':
+        markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
+        btn1 = types.KeyboardButton('Main Menu')
+        markup.add(btn1)
+        token.send_message(message.from_user.id, 'Chapter:\nBig change\n\nhttps://space4kids.ru/1714', reply_markup=markup, parse_mode='Markdown')
+
+    elif message.text == 'Knowledge':
+        markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
+        btn01 = types.KeyboardButton('Main Menu')
+        btn1 = types.KeyboardButton('Lectures')
+        btn2 = types.KeyboardButton('Books')
+        btn3 = types.KeyboardButton('Documentaries')
+        btn4 = types.KeyboardButton('TV shows')
+        btn5 = types.KeyboardButton('Feature films')
+        btn6 = types.KeyboardButton('Cartoons')
+        btn7 = types.KeyboardButton('Available about Space')
+        btn8 = types.KeyboardButton('Magazines')
+        markup.add(btn01, btn1, btn2, btn3, btn4, btn5, btn6, btn7, btn8)
+        token.send_message(message.from_user.id, 'Select a subsection', reply_markup=markup)
+
+    elif message.text == 'Lectures':
+        markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
+        btn1 = types.KeyboardButton('Main Menu')
+        markup.add(btn1)
+        token.send_message(message.from_user.id, 'Chapter:\nLectures\n\nhttps://space4kids.ru/118', reply_markup=markup, parse_mode='Markdown')
+
+    elif message.text == 'Books':
+        markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
+        btn1 = types.KeyboardButton('Main Menu')
+        markup.add(btn1)
+        token.send_message(message.from_user.id, 'Chapter:\nBooks\n\nhttps://space4kids.ru/127', reply_markup=markup, parse_mode='Markdown')
+
+    elif message.text == 'Documentaries':
+        markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
+        btn1 = types.KeyboardButton('Main Menu')
+        markup.add(btn1)
+        token.send_message(message.from_user.id, 'Chapter:\nDocumentaries\n\nhttps://space4kids.ru/126', reply_markup=markup, parse_mode='Markdown')
+
+    elif message.text == 'TV shows':
+        markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
+        btn1 = types.KeyboardButton('Main Menu')
+        markup.add(btn1)
+        token.send_message(message.from_user.id, 'Chapter:\nTV shows\n\nhttps://space4kids.ru/128', reply_markup=markup, parse_mode='Markdown')
+
+    elif message.text == 'Feature films':
+        markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
+        btn1 = types.KeyboardButton('Main Menu')
+        markup.add(btn1)
+        token.send_message(message.from_user.id, 'Chapter:\nFeature films\n\nhttps://space4kids.ru/656', reply_markup=markup, parse_mode='Markdown')
+
+    elif message.text == 'Cartoons':
+        markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
+        btn1 = types.KeyboardButton('Main Menu')
+        markup.add(btn1)
+        token.send_message(message.from_user.id, 'Chapter:\nCartoons\n\nhttps://space4kids.ru/1753', reply_markup=markup, parse_mode='Markdown')
+
+    elif message.text == 'Available about Space':
+        markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
+        btn1 = types.KeyboardButton('Main Menu')
+        markup.add(btn1)
+        token.send_message(message.from_user.id, 'Chapter:\nAvailable about Space\n\nhttps://space4kids.ru/125', reply_markup=markup, parse_mode='Markdown')
+
+    elif message.text == 'Magazines':
+        markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
+        btn1 = types.KeyboardButton('Main Menu')
+        markup.add(btn1)
+        token.send_message(message.from_user.id, 'Chapter:\nMagazines\n\nhttps://space4kids.ru/980', reply_markup=markup, parse_mode='Markdown')
+
+    elif message.text == 'Navigation of professions':
+        markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
+        btn01 = types.KeyboardButton('Main Menu')
+        btn1 = types.KeyboardButton('Directory of professions')
+        btn2 = types.KeyboardButton('Educational organizations')
+        btn3 = types.KeyboardButton('Organizations of the Roscosmos State Corporation')
+        btn4 = types.KeyboardButton('Career guidance testing')
+        markup.add(btn01, btn1, btn2, btn3, btn4)
+        token.send_message(message.from_user.id, 'Select a subsection', reply_markup=markup)
+
+    elif message.text == 'Directory of professions':
+        markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
+        btn1 = types.KeyboardButton('Main Menu')
+        markup.add(btn1)
+        token.send_message(message.from_user.id, 'Chapter:\nDirectory of professions\n\nhttps://space4kids.ru/108', reply_markup=markup, parse_mode='Markdown')
+
+    elif message.text == 'Educational organizations':
+        markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
+        btn1 = types.KeyboardButton('Main Menu')
+        markup.add(btn1)
+        token.send_message(message.from_user.id, 'Chapter:\nEducational organizations\n\nhttps://space4kids.ru/110', reply_markup=markup, parse_mode='Markdown')
+
+    elif message.text == 'Organizations of the Roscosmos State Corporation':
+        markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
+        btn1 = types.KeyboardButton('Main Menu')
+        markup.add(btn1)
+        token.send_message(message.from_user.id, 'Chapter:\nOrganizations of the Roscosmos State Corporation\n\nhttps://space4kids.ru/950', reply_markup=markup, parse_mode='Markdown')
+
+    elif message.text == 'Career guidance testing':
+        markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
+        btn1 = types.KeyboardButton('Main Menu')
+        markup.add(btn1)
+        token.send_message(message.from_user.id, 'Chapter:\nCareer guidance testing\n\nhttps://space4kids.ru/112', reply_markup=markup, parse_mode='Markdown')
+
+    elif message.text == 'To the teacher':
+        markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
+        btn01 = types.KeyboardButton('Main Menu')
+        btn1 = types.KeyboardButton('The concept of the "Space Class" programs')
+        btn2 = types.KeyboardButton('Methodological materials')
+        btn3 = types.KeyboardButton('Museums and education centers')
+        btn4 = types.KeyboardButton('Olympiads and competitions')
+        btn5 = types.KeyboardButton('Project activities')
+        btn6 = types.KeyboardButton('Lessons and experiments')
+        btn7 = types.KeyboardButton('Posters and posters')
+        markup.add(btn01, btn1, btn2, btn3, btn4, btn5, btn6, btn7)
+        token.send_message(message.from_user.id, 'Select a subsection', reply_markup=markup)
+
+    elif message.text == 'The concept of the "Space Class" programs':
+        markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
+        btn1 = types.KeyboardButton('Main Menu')
+        markup.add(btn1)
+        token.send_message(message.from_user.id, 'Chapter:\nThe concept of the "Space Class" programs\n\nhttps://space4kids.ru/120', reply_markup=markup, parse_mode='Markdown')
+
+    elif message.text == 'Methodological materials':
+        markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
+        btn1 = types.KeyboardButton('Main Menu')
+        markup.add(btn1)
+        token.send_message(message.from_user.id, 'Chapter:\nMethodological materials\n\nhttps://space4kids.ru/121', reply_markup=markup, parse_mode='Markdown')
+
+    elif message.text == 'Museums and education centers':
+        markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
+        btn1 = types.KeyboardButton('Main Menu')
+        markup.add(btn1)
+        token.send_message(message.from_user.id, 'Chapter:\nMuseums and education centers\n\nhttps://space4kids.ru/122', reply_markup=markup, parse_mode='Markdown')
+
+    elif message.text == 'Olympiads and competitions':
+        markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
+        btn1 = types.KeyboardButton('Main Menu')
+        markup.add(btn1)
+        token.send_message(message.from_user.id, 'Chapter:\nOlympiads and competitions\n\nhttps://space4kids.ru/124', reply_markup=markup, parse_mode='Markdown')
+
+    elif message.text == 'Project activities':
+        markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
+        btn1 = types.KeyboardButton('Main Menu')
+        markup.add(btn1)
+        token.send_message(message.from_user.id, 'Chapter:\nProject activities\n\nhttps://space4kids.ru/880', reply_markup=markup, parse_mode='Markdown')
+
+    elif message.text == 'Lessons and experiments':
+        markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
+        btn1 = types.KeyboardButton('Main Menu')
+        markup.add(btn1)
+        token.send_message(message.from_user.id, 'Chapter:\nLessons and experiments\n\nhttps://space4kids.ru/881', reply_markup=markup, parse_mode='Markdown')
+
+    elif message.text == 'Posters and posters':
+        markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
+        btn1 = types.KeyboardButton('Main Menu')
+        markup.add(btn1)
+        token.send_message(message.from_user.id, 'Chapter:\nPosters and posters\n\nhttps://space4kids.ru/1707', reply_markup=markup, parse_mode='Markdown')
+
+    elif message.text == 'Media':
+        markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
+        btn01 = types.KeyboardButton('Main Menu')
+        btn1 = types.KeyboardButton('Photo')
+        btn2 = types.KeyboardButton('Video')
+        btn3 = types.KeyboardButton('Interactive')
+        btn4 = types.KeyboardButton('Rules for the use of media materials')
+        markup.add(btn01, btn1, btn2, btn3, btn4)
+        token.send_message(message.from_user.id, 'Select a subsection', reply_markup=markup)
+
+
+    elif message.text == 'Photo':
+        markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
+        btn01 = types.KeyboardButton('Main Menu')
+        btn1 = types.KeyboardButton('Travel the world with an astronaut')
+        btn2 = types.KeyboardButton('Launch of launch vehicles')
+        markup.add(btn01, btn1, btn2)
+        token.send_message(message.from_user.id, 'Select a subsection', reply_markup=markup)
+
+    elif message.text == 'Путешествуй по миру с космонавтом':
+        markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
+        btn1 = types.KeyboardButton('Main Menu')
+        markup.add(btn1)
+        token.send_message(message.from_user.id, 'Chapter:\nTravel the world with an astronaut\n\nhttps://space4kids.ru/113', reply_markup=markup, parse_mode='Markdown')
+
+    elif message.text == 'Launch of launch vehicles':
+        markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
+        btn1 = types.KeyboardButton('Main Menu')
+        markup.add(btn1)
+        token.send_message(message.from_user.id, 'Chapter:\nLaunch of launch vehicles\n\nhttps://space4kids.ru/130', reply_markup=markup, parse_mode='Markdown')
+
+
+    elif message.text == 'Video':
+        markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
+        btn01 = types.KeyboardButton('Main Menu')
+        btn1 = types.KeyboardButton('If only')
+        btn2 = types.KeyboardButton('... Freeze!')
+        btn3 = types.KeyboardButton('A star named ISS')
+        btn4 = types.KeyboardButton('Open space')
+        btn5 = types.KeyboardButton('We are the Russian space')
+        btn6 = types.KeyboardButton('We are the first!')
+        btn7 = types.KeyboardButton('IL-76 MDK: flight into weightlessness')
+        btn8 = types.KeyboardButton('The show "ISS in touch"')
+        btn9 = types.KeyboardButton('The legendary "Blue Bird" - cosmonaut rescuer')
+        btn10 = types.KeyboardButton('Planetarium No. 1, Saint Petersburg')
+        btn11 = types.KeyboardButton('Video of flights into the stratosphere on the MiG 29')
+        markup.add(btn01, btn1, btn2, btn3, btn4, btn5, btn6, btn7, btn8, btn9, btn10, btn11)
+        token.send_message(message.from_user.id, 'Select a subsection', reply_markup=markup)
+
+    elif message.text == 'If only':
+        markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
+        btn1 = types.KeyboardButton('Main Menu')
+        markup.add(btn1)
+        token.send_message(message.from_user.id, 'Chapter:\nIf only\n\nhttps://space4kids.ru/675', reply_markup=markup, parse_mode='Markdown')
+
+    elif message.text == '... Freeze!':
+        markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
+        btn1 = types.KeyboardButton('Main Menu')
+        markup.add(btn1)
+        token.send_message(message.from_user.id, 'Chapter:\n... Freeze!\n\nhttps://space4kids.ru/680', reply_markup=markup, parse_mode='Markdown')
+
+    elif message.text == 'A star named ISS':
+        markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
+        btn1 = types.KeyboardButton('Main Menu')
+        markup.add(btn1)
+        token.send_message(message.from_user.id, 'Chapter:\nA star named ISS\n\nhttps://space4kids.ru/686', reply_markup=markup, parse_mode='Markdown')
+
+    elif message.text == 'Open space':
+        markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
+        btn1 = types.KeyboardButton('Main Menu')
+        markup.add(btn1)
+        token.send_message(message.from_user.id, 'Chapter:\nOpen space\n\nhttps://space4kids.ru/683', reply_markup=markup, parse_mode='Markdown')
+
+    elif message.text == 'We are the Russian space':
+        markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
+        btn1 = types.KeyboardButton('Main Menu')
+        markup.add(btn1)
+        token.send_message(message.from_user.id, 'Chapter:\nWe are the Russian space\n\nhttps://space4kids.ru/695', reply_markup=markup, parse_mode='Markdown')
+
+    elif message.text == 'We are the first!':
+        markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
+        btn1 = types.KeyboardButton('Main Menu')
+        markup.add(btn1)
+        token.send_message(message.from_user.id, 'Chapter:\nWe are the first!\n\nhttps://space4kids.ru/697', reply_markup=markup, parse_mode='Markdown')
+
+    elif message.text == 'IL-76 MDK: flight into weightlessness':
+        markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
+        btn1 = types.KeyboardButton('Main Menu')
+        markup.add(btn1)
+        token.send_message(message.from_user.id, 'Chapter:\nIL-76 MDK: flight into weightlessness\n\nhttps://space4kids.ru/711', reply_markup=markup, parse_mode='Markdown')
+
+    elif message.text == 'The show "ISS in touch"':
+        markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
+        btn1 = types.KeyboardButton('Main Menu')
+        markup.add(btn1)
+        token.send_message(message.from_user.id, 'Chapter:\nThe show "ISS in touch"\n\nhttps://space4kids.ru/701', reply_markup=markup, parse_mode='Markdown')
+
+    elif message.text == 'The legendary "Blue Bird" - cosmonaut rescuer':
+        markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
+        btn1 = types.KeyboardButton('Main Menu')
+        markup.add(btn1)
+        token.send_message(message.from_user.id, 'Chapter:\nThe legendary "Blue Bird" - cosmonaut rescuer\n\nhttps://space4kids.ru/1483', reply_markup=markup, parse_mode='Markdown')
+
+    elif message.text == 'Planetarium No. 1, Saint Petersburg':
+        markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
+        btn1 = types.KeyboardButton('Main Menu')
+        markup.add(btn1)
+        token.send_message(message.from_user.id, 'Chapter:\nPlanetarium No. 1, Saint Petersburg\n\nhttps://space4kids.ru/1708', reply_markup=markup, parse_mode='Markdown')
+
+    elif message.text == 'Video of flights into the stratosphere on the MiG 29':
+        markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
+        btn1 = types.KeyboardButton('Main Menu')
+        markup.add(btn1)
+        token.send_message(message.from_user.id, 'Chapter:\nVideo of flights into the stratosphere on the MiG 29\n\nhttps://space4kids.ru/1715', reply_markup=markup, parse_mode='Markdown')
+
+    elif message.text == 'Interactive':
+        markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
+        btn01 = types.KeyboardButton('Main Menu')
+        btn1 = types.KeyboardButton('Cosmonaut Training Center (CTC)')
+        btn2 = types.KeyboardButton('CTC Museum')
+        btn3 = types.KeyboardButton('Cosmocenter CTC')
+        btn4 = types.KeyboardButton('CTC Aviation Park')
+        btn5 = types.KeyboardButton('The medical base of the CTC')
+        btn6 = types.KeyboardButton('NPP Zvezda')
+        btn7 = types.KeyboardButton('ISS tour with Andrey Borisenko')
+        btn8 = types.KeyboardButton('Flight into the stratosphere')
+        btn9 = types.KeyboardButton('Soyuz MS-05 Launch Company')
+        btn10 = types.KeyboardButton('VR360 zero gravity')
+        btn11 = types.KeyboardButton('Memorial Museum of Cosmonautics')
+        btn12 = types.KeyboardButton('Cosmos 360: zero gravity training on an IL-76 aircraft')
+        btn13 = types.KeyboardButton('VDNKH, Kosmos Pavilion')
+        btn14 = types.KeyboardButton('The Russian Space 360 Project')
+        btn15 = types.KeyboardButton('360, 8k, vr tour of Baikonur')
+        btn16 = types.KeyboardButton('Launch complex and command post of the Energia rocket. 360, 4k')
+        btn17 = types.KeyboardButton('Virtual tour of the museum of JSC "NPO Lavochkina"')
+        markup.add(btn01, btn1, btn2, btn3, btn4, btn5, btn6, btn7, btn8, btn9, btn10, btn11, btn12, btn13, btn14, btn15, btn16, btn17)
+        token.send_message(message.from_user.id, 'Select a subsection', reply_markup=markup)
+
+    elif message.text == 'Cosmonaut Training Center (CTC)':
+        markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
+        btn1 = types.KeyboardButton('Main Menu')
+        markup.add(btn1)
+        token.send_message(message.from_user.id, 'Chapter:\nCosmonaut Training Center (CTC)\n\nhttps://space4kids.ru/133', reply_markup=markup, parse_mode='Markdown')
+
+    elif message.text == 'CTC Museum':
+        markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
+        btn1 = types.KeyboardButton('Main Menu')
+        markup.add(btn1)
+        token.send_message(message.from_user.id, 'Chapter:\nCTC Museum\n\nhttps://space4kids.ru/134', reply_markup=markup, parse_mode='Markdown')
+
+    elif message.text == 'Cosmocenter CTC':
+        markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
+        btn1 = types.KeyboardButton('Main Menu')
+        markup.add(btn1)
+        token.send_message(message.from_user.id, 'Chapter:\nCosmocenter CTC\n\nhttps://space4kids.ru/135', reply_markup=markup, parse_mode='Markdown')
+
+    elif message.text == 'CTC Aviation Park':
+        markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
+        btn1 = types.KeyboardButton('Main Menu')
+        markup.add(btn1)
+        token.send_message(message.from_user.id, 'Chapter:\nCTC Aviation Park\n\nhttps://space4kids.ru/136', reply_markup=markup, parse_mode='Markdown')
+
+    elif message.text == 'The medical base of the CTC':
+        markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
+        btn1 = types.KeyboardButton('Main Menu')
+        markup.add(btn1)
+        token.send_message(message.from_user.id, 'Chapter:\nThe medical base of the CTC\n\nhttps://space4kids.ru/137', reply_markup=markup, parse_mode='Markdown')
+
+    elif message.text == 'NPP Zvezda':
+        markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
+        btn1 = types.KeyboardButton('Main Menu')
+        markup.add(btn1)
+        token.send_message(message.from_user.id, 'Chapter:\nNPP Zvezda\n\nhttps://space4kids.ru/632', reply_markup=markup, parse_mode='Markdown')
+
+    elif message.text == 'ISS tour with Andrey Borisenko':
+        markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
+        btn1 = types.KeyboardButton('Main Menu')
+        markup.add(btn1)
+        token.send_message(message.from_user.id, 'Chapter:\nISS tour with Andrey Borisenko\n\nhttps://space4kids.ru/682', reply_markup=markup, parse_mode='Markdown')
+
+    elif message.text == 'Flight into the stratosphere':
+        markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
+        btn1 = types.KeyboardButton('Main Menu')
+        markup.add(btn1)
+        token.send_message(message.from_user.id, 'Chapter:\nFlight into the stratosphere\n\nhttps://space4kids.ru/687', reply_markup=markup, parse_mode='Markdown')
+
+    elif message.text == 'Soyuz MS-05 Launch Company':
+        markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
+        btn1 = types.KeyboardButton('Main Menu')
+        markup.add(btn1)
+        token.send_message(message.from_user.id, 'Chapter:\nSoyuz MS-05 Launch Company\n\nhttps://space4kids.ru/688', reply_markup=markup, parse_mode='Markdown')
+
+    elif message.text == 'VR360 zero gravity':
+        markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
+        btn1 = types.KeyboardButton('Main Menu')
+        markup.add(btn1)
+        token.send_message(message.from_user.id, 'Chapter:\nVR360 zero gravity\n\nhttps://space4kids.ru/1296', reply_markup=markup, parse_mode='Markdown')
+
+    elif message.text == 'Memorial Museum of Cosmonautics':
+        markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
+        btn1 = types.KeyboardButton('Main Menu')
+        markup.add(btn1)
+        token.send_message(message.from_user.id, 'Chapter:\nMemorial Museum of Cosmonautics\n\nhttps://space4kids.ru/871', reply_markup=markup, parse_mode='Markdown')
+
+    elif message.text == 'Cosmos 360: zero gravity training on an IL-76 aircraft':
+        markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
+        btn1 = types.KeyboardButton('Main Menu')
+        markup.add(btn1)
+        token.send_message(message.from_user.id, 'Chapter:\nCosmos 360: zero gravity training on an IL-76 aircraft\n\nhttps://space4kids.ru/1302', reply_markup=markup, parse_mode='Markdown')
+
+    elif message.text == 'VDNKH, Kosmos Pavilion':
+        markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
+        btn1 = types.KeyboardButton('Main Menu')
+        markup.add(btn1)
+        token.send_message(message.from_user.id, 'Chapter:\nVDNKH, Kosmos Pavilion\n\nhttps://space4kids.ru/1482', reply_markup=markup, parse_mode='Markdown')
+
+    elif message.text == 'The Russian Space 360 Project':
+        markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
+        btn1 = types.KeyboardButton('Main Menu')
+        markup.add(btn1)
+        token.send_message(message.from_user.id, 'Chapter:\nThe Russian Space 360 Project\n\nhttps://space4kids.ru/1701', reply_markup=markup, parse_mode='Markdown')
+
+    elif message.text == '360, 8k, vr tour of Baikonur':
+        markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
+        btn1 = types.KeyboardButton('Main Menu')
+        markup.add(btn1)
+        token.send_message(message.from_user.id, 'Chapter:\n360, 8k, vr tour of Baikonur\n\nhttps://space4kids.ru/2236', reply_markup=markup, parse_mode='Markdown')
+
+    elif message.text == 'Launch complex and command post of the Energia rocket. 360, 4k':
+        markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
+        btn1 = types.KeyboardButton('Main Menu')
+        markup.add(btn1)
+        token.send_message(message.from_user.id, 'Chapter:\nLaunch complex and command post of the Energia rocket. 360, 4k\n\nhttps://space4kids.ru/2237', reply_markup=markup, parse_mode='Markdown')
+
+    elif message.text == 'Virtual tour of the museum of JSC "NPO Lavochkina"':
+        markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
+        btn1 = types.KeyboardButton('Main Menu')
+        markup.add(btn1)
+        token.send_message(message.from_user.id, 'Chapter:\nVirtual tour of the museum of JSC "NPO Lavochkina"\n\nhttps://space4kids.ru/2262', reply_markup=markup, parse_mode='Markdown')
+
+    elif message.text == 'Rules for the use of media materials':
+        markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
+        btn1 = types.KeyboardButton('Main Menu')
+        markup.add(btn1)
+        token.send_message(message.from_user.id, 'Rules for the use of media materials\n\nhttps://www.roscosmos.ru/22650', reply_markup=markup, parse_mode='Markdown')
+
+    elif message.text == 'Search':
+        markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
+        btn1 = types.KeyboardButton('Main Menu')
+        markup.add(btn1)
+        token.send_message(message.from_user.id, 'By clicking on [link] https://space4kids.ru/search you will be able to enter the request yourself', reply_markup=markup, parse_mode='Markdown')
+
+token.polling(none_stop=True)
